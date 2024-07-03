@@ -6,8 +6,8 @@
 
 int main(int argc, char** argv) {
     const   int     MIN_ARGS   =   2;
-    const char NEW_STRING[] = "new";
-    char buf[80];
+    const   char    NEW_STRING[] = "new";
+    char    buf[80];
 
     // First we need to ensure that we have any arguments to the program
     if ( argc < MIN_ARGS ) {
