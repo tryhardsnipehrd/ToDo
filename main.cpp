@@ -9,6 +9,7 @@
 int main(int argc, char** argv) {
     const   int     MIN_ARGS   =   2;
     const   char    ADD_STRING[] = "add";
+    const   char    LIST_STRING[] = "check";
     std::vector<ToDoItem> itemList;
     ToDoItem    tempItem;
     std::string tempString;
@@ -41,7 +42,9 @@ int main(int argc, char** argv) {
         itemList.push_back( tempItem );
 
         SaveList( itemList );
-    } 
+    } else if ( strcmp( argv[1], LIST_STRING) == 0 ) {
+        LoadList( itemList );
+    }
 
     else {
         std::cout << "Invalid parameters passed: " << argv[1] << std::endl;
