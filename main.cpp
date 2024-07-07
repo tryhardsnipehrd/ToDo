@@ -11,6 +11,7 @@ int main(int argc, char** argv) {
     const   char    ADD_STRING[] = "add";
     const   char    LIST_STRING1[] = "check";
     const   char    LIST_STRING2[] = "list";
+    const   char    DELETE_STRING[] = "delete";
     std::vector<ToDoItem> itemList;
     ToDoItem    tempItem;
     std::string tempString;
@@ -24,6 +25,9 @@ int main(int argc, char** argv) {
         std::cout << "\t" << argv[0] << " TBD" << std::endl;
         return 0;
     }
+
+    // First we need to load our list.
+    LoadList( itemList );
     
     if ( strcmp( argv[1], ADD_STRING ) == 0 ) {
         std::cout << "Name of the ToDo List Item: ";
@@ -43,16 +47,21 @@ int main(int argc, char** argv) {
         itemList.push_back( tempItem );
 
         SaveList( itemList );
-    } else if ( strcmp( argv[1], LIST_STRING1) == 0 ) {
-        LoadList( itemList );
-    } else if ( strcmp( argv[1], LIST_STRING2) == 0 ) {
-        LoadList( itemList );
+    } else if ( strcmp( argv[1], LIST_STRING1 ) == 0 ) {
+        PrintList( itemList );
+    } else if ( strcmp( argv[1], LIST_STRING2 ) == 0 ) {
+        PrintList( itemList );
+    } else if ( strcmp( argv[1], DELETE_STRING ) == 0 ) {
+        if ( argc != 3 ) {
+            std::cout << "Please specify exactly one ID to remove." << std::endl;
+            return 0;
+        }
+
+        DeleteItem( itemList, std::stoi( argv[2] ) );
+        SaveList( itemList );
     }
 
     else {
         std::cout << "Invalid parameters passed: " << argv[1] << std::endl;
     }
-
-
-    PrintList( itemList );
 }

@@ -16,7 +16,7 @@ struct ToDoItem{
 void PrintList( const std::vector<ToDoItem> &ItemList );
 void SaveList( const std::vector<ToDoItem> &ItemList );
 void LoadList( std::vector<ToDoItem> &ItemList );
-
+void DeleteItem( std::vector<ToDoItem> &ItemList, int ID );
 
 
 
@@ -93,3 +93,16 @@ void LoadList( std::vector<ToDoItem> &ItemList ) {
         ItemList.push_back( temp );
     }
 };
+
+
+void DeleteItem( std::vector<ToDoItem> &ItemList, int ID ) {
+    int i;
+    ToDoItem temp;
+
+    for ( i=0; i<ItemList.size(); i++ ) {
+        if ( ItemList.at(i).ID == ID ) {
+            ItemList.erase( ItemList.begin() + i );
+            return;
+        }
+    }
+}
