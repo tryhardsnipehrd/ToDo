@@ -17,7 +17,7 @@ void PrintList( const std::vector<ToDoItem> &ItemList );
 void SaveList( const std::vector<ToDoItem> &ItemList );
 void LoadList( std::vector<ToDoItem> &ItemList );
 void DeleteItem( std::vector<ToDoItem> &ItemList, int ID );
-
+void ToggleItem( std::vector<ToDoItem> &ItemList, int ID );
 
 
 void PrintList( const std::vector<ToDoItem> &ItemList ) {
@@ -102,6 +102,18 @@ void DeleteItem( std::vector<ToDoItem> &ItemList, int ID ) {
     for ( i=0; i<ItemList.size(); i++ ) {
         if ( ItemList.at(i).ID == ID ) {
             ItemList.erase( ItemList.begin() + i );
+            return;
+        }
+    }
+}
+
+
+void ToggleItem( std::vector<ToDoItem> &ItemList, int ID ) {
+    int i;
+
+    for ( i=0; i<ItemList.size(); i++ ) {
+        if ( ItemList.at(i).ID == ID ) {
+            ItemList.at(i).IsCompleted = !ItemList.at(i).IsCompleted;
             return;
         }
     }
