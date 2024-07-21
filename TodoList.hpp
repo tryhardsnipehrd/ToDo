@@ -23,7 +23,7 @@ struct ToDoItem{
     std::string     Description;
     bool            IsCompleted = false;
     int             ID;
-};
+}
 
 void PrintList( const std::vector<ToDoItem> &ItemList );
 void SaveList( const std::vector<ToDoItem> &ItemList );
@@ -50,7 +50,7 @@ void PrintList( const std::vector<ToDoItem> &ItemList ) {
         std::cout << "\t" << temp.Description << std::endl;
         
     }
-};
+}
 
 void SaveList( const std::vector<ToDoItem> &ItemList ) {
     std::ofstream saveFile;
@@ -73,7 +73,7 @@ void SaveList( const std::vector<ToDoItem> &ItemList ) {
     }
 
     saveFile.close();
-};
+}
 
 void LoadList( std::vector<ToDoItem> &ItemList ) {
     ToDoItem temp;
@@ -83,7 +83,7 @@ void LoadList( std::vector<ToDoItem> &ItemList ) {
 
     // Open the data for reading
     saveFile.open( TODO_FILE_LOCATION, std::ifstream::in );
-    
+ 
     // Verify that the file actually exists...
     // If not, we need to return so we don't accidentally do dumb things...
     if ( !saveFile.is_open() ) {
@@ -116,7 +116,7 @@ void LoadList( std::vector<ToDoItem> &ItemList ) {
 
         ItemList.push_back( temp );
     }
-};
+}
 
 
 void DeleteItem( std::vector<ToDoItem> &ItemList, int ID ) {
