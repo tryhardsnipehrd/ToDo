@@ -1,10 +1,22 @@
 #pragma once
 
+#include <filesystem>
 #include <fstream>
 #include <string>
 #include <vector>
 
-#define TODO_FILE_LOCATION "./todolist.sav"
+
+#define INVERT(x) (x = !x)
+
+#ifdef __linux__
+    #define TODO_FILE_LOCATION "~/.config/ToDoList/todolist.sav"
+    #define TODO_SAVE_DIR      "~/.config/ToDoList"
+#endif
+#ifdef _WIN32
+    #define TODO_FILE_LOCATION "%appdata%/ToDoList/todolist.sav"
+    #define TODO_SAVE_DIR      "%appdata%/ToDoList"
+#endif
+
 
 struct ToDoItem{
     std::string     Name;
@@ -18,6 +30,7 @@ void SaveList( const std::vector<ToDoItem> &ItemList );
 void LoadList( std::vector<ToDoItem> &ItemList );
 void DeleteItem( std::vector<ToDoItem> &ItemList, int ID );
 void ToggleItem( std::vector<ToDoItem> &ItemList, int ID );
+void CheckSaveDir();
 
 
 void PrintList( const std::vector<ToDoItem> &ItemList ) {
@@ -44,6 +57,10 @@ void SaveList( const std::vector<ToDoItem> &ItemList ) {
 
     // Open the file for writing, disregarding any existing content, since we want to save the most recent data
     saveFile.open( TODO_FILE_LOCATION, std::ofstream::out | std::ofstream::trunc );
+    if ( !saveFile.is_open() ) {
+        std::cout << "File Not Opened" << std::endl;
+        return;
+    }
 
     // First we write the amount of items we have to the first line
     saveFile << ItemList.size() << "\n";
@@ -66,6 +83,13 @@ void LoadList( std::vector<ToDoItem> &ItemList ) {
 
     // Open the data for reading
     saveFile.open( TODO_FILE_LOCATION, std::ifstream::in );
+    
+    // Verify that the file actually exists...
+    // If not, we need to return so we don't accidentally do dumb things...
+    if ( !saveFile.is_open() ) {
+        std::cout << "File Not Opened" << std::endl;
+        return;
+    }
 
     // Now get the first line, since that is how many items we need to read
     std::getline( saveFile, buf );
@@ -113,8 +137,25 @@ void ToggleItem( std::vector<ToDoItem> &ItemList, int ID ) {
 
     for ( i=0; i<ItemList.size(); i++ ) {
         if ( ItemList.at(i).ID == ID ) {
-            ItemList.at(i).IsCompleted = !ItemList.at(i).IsCompleted;
+            INVERT(ItemList.at(i).IsCompleted);
             return;
         }
     }
+}
+
+
+void CheckSaveDir() {
+    std::cout << "Creating save directory" << std::endl;
+    std::filesystem::create_directory( TODO_SAVE_DIR );    
+}
+
+void PrintHelp() {
+    std::cout << "Usage:\n";
+    std::cout << "\tToDoList <command>\n\n";
+    std::cout << "Valid Commands:\n";
+    std::cout << "add\tAdd an item to the list\n";
+    std::cout << "check\tCheck the contents of the list\n";
+    std::cout << "list\tSame as check\n";
+    std::cout << "delete\tRemove an item from the list\n";
+    std::cout << "toggle\tToggle the completion status of an item" << std::endl;
 }

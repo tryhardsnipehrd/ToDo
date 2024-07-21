@@ -17,15 +17,15 @@ int main(int argc, char** argv) {
     ToDoItem    tempItem;
     std::string tempString;
 
-    tempItem.Name = "Your First Item";
-    tempItem.Description = "Add new items, remove existing ones, and make it your own!";
 
     // First we need to ensure that we have any arguments to the program
     if ( argc < MIN_ARGS ) {
-        std::cout << "Usage:" << std::endl;
-        std::cout << "\t" << argv[0] << " TBD" << std::endl;
+        PrintHelp();
         return 0;
     }
+
+    // Verify that our file exists
+    CheckSaveDir();
 
     // First we need to load our list.
     LoadList( itemList );
