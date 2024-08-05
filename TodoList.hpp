@@ -2,19 +2,22 @@
 
 #include <filesystem>
 #include <fstream>
+#include <stdlib.h>
 #include <string>
 #include <vector>
 
 
 #define INVERT(x) (x = !x)
+#define IS_LINUX false
+#define IS_WINDOWS false
 
 #ifdef __linux__
-    #define TODO_FILE_LOCATION "~/.config/ToDoList/todolist.sav"
-    #define TODO_SAVE_DIR      "~/.config/ToDoList"
+    #undef IS_LINUX
+    #define IS_LINUX true
 #endif
 #ifdef _WIN32
-    #define TODO_FILE_LOCATION "%appdata%/ToDoList/todolist.sav"
-    #define TODO_SAVE_DIR      "%appdata%/ToDoList"
+    #undef IS_WINDOWS
+    #define IS_WINDOWS true
 #endif
 
 
@@ -23,7 +26,7 @@ struct ToDoItem{
     std::string     Description;
     bool            IsCompleted = false;
     int             ID;
-}
+};
 
 void PrintList( const std::vector<ToDoItem> &ItemList );
 void SaveList( const std::vector<ToDoItem> &ItemList );
@@ -31,6 +34,7 @@ void LoadList( std::vector<ToDoItem> &ItemList );
 void DeleteItem( std::vector<ToDoItem> &ItemList, int ID );
 void ToggleItem( std::vector<ToDoItem> &ItemList, int ID );
 void CheckSaveDir();
+std::string getSaveDir();
 
 
 void PrintList( const std::vector<ToDoItem> &ItemList ) {
@@ -54,9 +58,11 @@ void PrintList( const std::vector<ToDoItem> &ItemList ) {
 
 void SaveList( const std::vector<ToDoItem> &ItemList ) {
     std::ofstream saveFile;
+    std::string ToDoFileLocation = getSaveDir();
+    ToDoFileLocation.append( "ToDoItems.dat" );
 
     // Open the file for writing, disregarding any existing content, since we want to save the most recent data
-    saveFile.open( TODO_FILE_LOCATION, std::ofstream::out | std::ofstream::trunc );
+    saveFile.open( ToDoFileLocation, std::ofstream::out | std::ofstream::trunc );
     if ( !saveFile.is_open() ) {
         std::cout << "File Not Opened" << std::endl;
         return;
@@ -80,14 +86,17 @@ void LoadList( std::vector<ToDoItem> &ItemList ) {
     std::ifstream saveFile;
     int numItems;
     std::string buf;
+    std::string ToDoFileLocation = getSaveDir();
+    ToDoFileLocation.append( "ToDoItems.dat" );
 
     // Open the data for reading
-    saveFile.open( TODO_FILE_LOCATION, std::ifstream::in );
+    saveFile.open( ToDoFileLocation, std::ifstream::in );
  
     // Verify that the file actually exists...
     // If not, we need to return so we don't accidentally do dumb things...
     if ( !saveFile.is_open() ) {
         std::cout << "File Not Opened" << std::endl;
+        std::cout << "If this is a first run, this is expected. Please run again after completing your current task." << std::endl;
         return;
     }
 
@@ -145,17 +154,37 @@ void ToggleItem( std::vector<ToDoItem> &ItemList, int ID ) {
 
 
 void CheckSaveDir() {
-    std::cout << "Creating save directory" << std::endl;
-    std::filesystem::create_directory( TODO_SAVE_DIR );    
+    std::filesystem::create_directory( getSaveDir() );
 }
 
 void PrintHelp() {
     std::cout << "Usage:\n";
     std::cout << "\tToDoList <command>\n\n";
     std::cout << "Valid Commands:\n";
+    std::cout << "help\tOutput this menu\n";
     std::cout << "add\tAdd an item to the list\n";
     std::cout << "check\tCheck the contents of the list\n";
     std::cout << "list\tSame as check\n";
     std::cout << "delete\tRemove an item from the list\n";
     std::cout << "toggle\tToggle the completion status of an item" << std::endl;
+}
+
+
+std::string getSaveDir() {
+    char* curUser;
+    std::string strUser;
+    std::string confPath = "/home/";
+
+    if ( IS_LINUX ) {
+        curUser = getenv( "USER" );
+        if ( curUser == NULL ) {
+            std::cout << "Could not find $USER. Please ensure $USER is set in the environment variables" << std::endl;
+            exit(1);
+        }
+        strUser.assign( curUser, strlen( curUser ) ); 
+        confPath.append(strUser);
+        confPath.append( "/.local/ToDo/" );
+    }
+
+    return confPath;
 }

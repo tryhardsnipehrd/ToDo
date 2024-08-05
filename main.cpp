@@ -13,6 +13,7 @@ int main(int argc, char** argv) {
     const   char    LIST_STRING2[] = "list";
     const   char    DELETE_STRING[] = "delete";
     const   char    TOGGLE_STRING[] = "toggle";
+    const   char    HELP_STRING[] = "help";
     std::vector<ToDoItem> itemList;
     ToDoItem    tempItem;
     std::string tempString;
@@ -69,7 +70,9 @@ int main(int argc, char** argv) {
         ToggleItem( itemList, std::stoi( argv[2] ) );
         SaveList( itemList );
 
-    } 
+    } else if ( strcmp( argv[1], HELP_STRING ) == 0 ) {
+        PrintHelp(); 
+    }
 
     else {
         std::cout << "Invalid parameters passed: " << argv[1] << std::endl;
