@@ -156,6 +156,24 @@ void PrintHelp() {
     std::cout << "check\tSame as above\n";
     std::cout << "delete\tDelete an item from the list by id\n";
     std::cout << "toggle\tToggle the completion of an item\n";
+    std::cout << "clear\tRemove all items that are completed\n";
 
     std::cout << std::endl;
+}
+
+void ClearList( std::vector<ToDoItem> &ItemList ) {
+    std::vector<int> idsToRemove;
+    int i;
+
+    for ( i=0; i<ItemList.size(); i++ ) {
+        if ( ItemList.at(i).IsCompleted ) {
+            idsToRemove.push_back( ItemList.at(i).ID );
+        }
+    }
+
+    for ( i=0; i<idsToRemove.size(); i++ ) {
+        DeleteItem( ItemList, idsToRemove.at(i) );
+    }
+
+    SaveList( ItemList );
 }

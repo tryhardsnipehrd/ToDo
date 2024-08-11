@@ -14,6 +14,7 @@ int main(int argc, char** argv) {
     const   char    DELETE_STRING[] = "delete";
     const   char    TOGGLE_STRING[] = "toggle";
     const   char    HELP_STRING[] = "help";
+    const   char    CLEAR_STRING[] = "clear";
     std::vector<ToDoItem> itemList;
     ToDoItem    tempItem;
     std::string tempString;
@@ -72,6 +73,8 @@ int main(int argc, char** argv) {
 
     } else if ( strcmp( argv[1], HELP_STRING ) == 0 ) {
         PrintHelp(); 
+    } else if ( strcmp( argv[1], CLEAR_STRING ) == 0 ) {
+        ClearList( itemList );
     }
 
     else {

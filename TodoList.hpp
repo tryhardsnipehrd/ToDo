@@ -33,4 +33,4 @@ void ToggleItem( std::vector<ToDoItem> &ItemList, int ID );
 void CheckSaveDir();
 std::string getSaveDir();
 void PrintHelp();
-
+void ClearList( std::vector<ToDoItem> &ItemList );
