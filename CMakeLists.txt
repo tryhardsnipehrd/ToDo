@@ -8,4 +8,4 @@ set(CMAKE_CXX_CLANG_TIDY clang-tidy;
     -checks=llvm-include-order,misc-include-cleaner;
     )
 
-add_executable(TodoList main.cpp functions.cpp)
+add_executable(TodoList main.cpp files.cpp list.cpp utils.cpp)
