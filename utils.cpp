@@ -19,11 +19,10 @@ void PrintHelp() {
 }
 
 std::string getSaveDir() {
-    char* curUser;
-    std::string strUser;
-    std::string confPath = "/home/";
-
     if ( IS_LINUX ) {
+        char* curUser;
+        std::string strUser;
+        std::string confPath = "/home/";
         curUser = getenv( "USER" );
         if ( curUser == NULL ) {
             std::cout << "Could not find $USER. Please ensure $USER is set in the environment variables" << std::endl;
@@ -32,8 +31,7 @@ std::string getSaveDir() {
         strUser.assign( curUser, strlen( curUser ) ); 
         confPath.append(strUser);
         confPath.append( "/.local/ToDo/" );
+        return confPath;
     }
-
-    return confPath;
 }
 
