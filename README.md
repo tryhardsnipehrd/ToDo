@@ -27,3 +27,7 @@ Find the ID number using `ToDoList <check/list>`
 ### clear
 Clear all items that have been completed.
 The same as calling `delete` on each id with the completed flag.
+
+## Contributing
+Feel free to make a pull request to fix any mistakes in the readme, fix my probably horrible code, add new features, etc.
+Contributions are *always* welcome!
