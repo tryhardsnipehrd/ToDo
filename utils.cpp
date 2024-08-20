@@ -32,6 +32,18 @@ std::string getSaveDir() {
         confPath.append(strUser);
         confPath.append( "/.local/ToDo/" );
         return confPath;
+    } else if ( IS_WINDOWS ) {
+        char* appData;
+        std::string confPath;
+
+        appData = getenv( "APPDATA" );
+        if ( appData == NULL ) {
+            std::cout << "Could not find %APPDATA%. Please ensure you are on a windows system.";
+            exit(1);
+        }
+        confPath.assign( appData, strlen( appData ) );
+        confPath.append( "/ToDo/" );
+        return confPath;
     }
 }
 
