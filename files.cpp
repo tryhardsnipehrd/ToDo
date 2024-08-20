@@ -57,6 +57,8 @@ void LoadList( std::vector<ToDoItem> &ItemList ) {
     // Convert the number to an int
     numItems = stoi( buf );
 
+    ItemList.reserve( numItems );
+
     for ( int i = 0; i < numItems; i++ ) {
         std::getline( saveFile, buf );
         temp.ID = stoi( buf );
