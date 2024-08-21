@@ -31,6 +31,6 @@ void LoadList( std::vector<ToDoItem> &ItemList );
 void DeleteItem( std::vector<ToDoItem> &ItemList, int ID );
 void ToggleItem( std::vector<ToDoItem> &ItemList, int ID );
 void CheckSaveDir();
-std::string getSaveDir();
+const std::string &getSaveDir();
 void PrintHelp();
 void ClearList( std::vector<ToDoItem> &ItemList );

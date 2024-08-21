@@ -18,11 +18,12 @@ void PrintHelp() {
     std::cout << std::endl;
 }
 
-std::string getSaveDir() {
+const std::string &getSaveDir() {
+    static std::string confPath;
+
+    if (!confPath.empty()) return confPath;
+
     if ( IS_LINUX ) {
-        std::string confPath;
-
-
         confPath = "/home/";
 
         const char* curUser = getenv( "USER" );
@@ -30,6 +31,7 @@ std::string getSaveDir() {
         curUser = getenv( "USER" );
         if ( curUser == NULL ) {
             std::cout << "Could not find $USER. Please ensure $USER is set in the environment variables" << std::endl;
+            confPath = "";
             exit(1);
         }
         strUser = curUser; 
@@ -38,12 +40,11 @@ std::string getSaveDir() {
         return confPath;
     } else if ( IS_WINDOWS ) {
         char* appData;
-        std::string confPath;
-
 
         appData = getenv( "APPDATA" );
         if ( appData == NULL ) {
             std::cout << "Could not find %APPDATA%. Please ensure you are on a windows system.";
+            confPath = "";
             exit(1);
         }
         confPath = appData;
