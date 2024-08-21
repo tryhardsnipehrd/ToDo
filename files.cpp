@@ -22,12 +22,13 @@ void SaveList( const std::vector<ToDoItem> &ItemList ) {
     // First we write the amount of items we have to the first line
     saveFile << ItemList.size() << "\n";
 
-    for ( ToDoItem temp : ItemList ) {
+    for ( const ToDoItem &temp : ItemList ) {
         saveFile << temp.ID << "\n";
         saveFile << temp.Name << "\n";
         saveFile << temp.Description << "\n";
-        saveFile << temp.IsCompleted << std::endl;
+        saveFile << temp.IsCompleted << "\n";
     }
+    saveFile << std::endl;
 
     saveFile.close();
 }

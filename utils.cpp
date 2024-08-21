@@ -2,7 +2,7 @@
 
 #include <cstring>
 #include <iostream>
-#include <stdlib.h>
+#include <cstdlib>
 #include <string>
 
 void PrintHelp() {
@@ -20,15 +20,19 @@ void PrintHelp() {
 
 std::string getSaveDir() {
     if ( IS_LINUX ) {
-        char* curUser;
+        std::string confPath;
+
+
+        confPath = "/home/";
+
+        const char* curUser = getenv( "USER" );
         std::string strUser;
-        std::string confPath = "/home/";
         curUser = getenv( "USER" );
         if ( curUser == NULL ) {
             std::cout << "Could not find $USER. Please ensure $USER is set in the environment variables" << std::endl;
             exit(1);
         }
-        strUser.assign( curUser, strlen( curUser ) ); 
+        strUser = curUser; 
         confPath.append(strUser);
         confPath.append( "/.local/ToDo/" );
         return confPath;
@@ -36,12 +40,13 @@ std::string getSaveDir() {
         char* appData;
         std::string confPath;
 
+
         appData = getenv( "APPDATA" );
         if ( appData == NULL ) {
             std::cout << "Could not find %APPDATA%. Please ensure you are on a windows system.";
             exit(1);
         }
-        confPath.assign( appData, strlen( appData ) );
+        confPath = appData;
         confPath.append( "/ToDo/" );
         return confPath;
     }

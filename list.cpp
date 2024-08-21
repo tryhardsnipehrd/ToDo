@@ -17,9 +17,10 @@ void PrintList( const std::vector<ToDoItem> &ItemList ) {
         // Print the name of the item
         std::cout << temp.Name << "\n";
         // And now the description
-        std::cout << "\t" << temp.Description << std::endl;
+        std::cout << "\t" << temp.Description << "\n";
         
     }
+    std::cout << std::endl;
 }
 
 void DeleteItem( std::vector<ToDoItem> &ItemList, int ID ) {
