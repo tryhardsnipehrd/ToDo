@@ -75,7 +75,7 @@ int main(int argc, char** argv) {
         PrintHelp(); 
     } else if ( strcmp( argv[1], CLEAR_STRING ) == 0 ) {
         ClearList( itemList );
-        SaveList( ItemList );
+        SaveList( itemList );
     }
 
     else {
