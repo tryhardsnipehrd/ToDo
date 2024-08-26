@@ -59,6 +59,4 @@ void ClearList( std::vector<ToDoItem> &ItemList ) {
     for ( i=0; i<idsToRemove.size(); i++ ) {
         DeleteItem( ItemList, idsToRemove.at(i) );
     }
-
-    SaveList( ItemList );
 }
