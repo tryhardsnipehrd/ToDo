@@ -1,8 +1,8 @@
 #include "TodoList.hpp"
 
+#include <cstdlib>
 #include <cstring>
 #include <iostream>
-#include <cstdlib>
 #include <string>
 
 void PrintHelp() {
@@ -28,7 +28,6 @@ const std::string &getSaveDir() {
 
         const char* curUser = getenv( "USER" );
         std::string strUser;
-        curUser = getenv( "USER" );
         if ( curUser == NULL ) {
             std::cout << "Could not find $USER. Please ensure $USER is set in the environment variables" << std::endl;
             confPath = "";
