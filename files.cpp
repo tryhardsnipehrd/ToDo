@@ -77,7 +77,7 @@ void LoadList( std::vector<ToDoItem> &ItemList ) {
             temp.IsCompleted = true;
         }
 
-        ItemList.push_back( temp );
+        ItemList.emplace_back( temp );
     }
 }
 

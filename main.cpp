@@ -7,18 +7,9 @@
 
 
 int main(int argc, char** argv) {
-    const   int     MIN_ARGS   =   2;
-    const   char    ADD_STRING[] = "add";
-    const   char    LIST_STRING1[] = "check";
-    const   char    LIST_STRING2[] = "list";
-    const   char    DELETE_STRING[] = "delete";
-    const   char    TOGGLE_STRING[] = "toggle";
-    const   char    HELP_STRING[] = "help";
-    const   char    CLEAR_STRING[] = "clear";
     std::vector<ToDoItem> itemList;
     ToDoItem    tempItem;
     std::string tempString;
-
 
     // First we need to ensure that we have any arguments to the program
     if ( argc < MIN_ARGS ) {

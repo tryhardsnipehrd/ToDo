@@ -17,6 +17,14 @@
     #define IS_WINDOWS true
 #endif
 
+inline const   int     MIN_ARGS   =   2;
+inline const   char    ADD_STRING[] = "add";
+inline const   char    LIST_STRING1[] = "check";
+inline const   char    LIST_STRING2[] = "list";
+inline const   char    DELETE_STRING[] = "delete";
+inline const   char    TOGGLE_STRING[] = "toggle";
+inline const   char    HELP_STRING[] = "help";
+inline const   char    CLEAR_STRING[] = "clear";
 
 struct ToDoItem{
     std::string     Name;
@@ -34,3 +42,5 @@ void CheckSaveDir();
 const std::string &getSaveDir();
 void PrintHelp();
 void ClearList( std::vector<ToDoItem> &ItemList );
+
+
